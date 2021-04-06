@@ -1,19 +1,42 @@
 <idea-plugin>
     <id>com.github.arajhansa.gomockerygenerator</id>
-    <name>go-mockery-generator</name>
-    <vendor>arajhansa</vendor>
+    <name>Go Mockery Generator</name>
+    <vendor email="rajhansa.advay@gmail.com" url="https://github.com/arajhansa">Advay Rajhansa</vendor>
 
-    <!-- Product and plugin compatibility requirements -->
-    <!-- https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <description>
+        This will auto generate the mocks for golang interfaces using mockery.
+    </description>
+
+    <depends>com.intellij.modules.go</depends>
+    <depends>com.intellij.modules.ultimate</depends>
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij"/>
+
+    <actions>
+        <action
+                id="com.github.arajhansa.gomockerygenerator.action.FileMocksAction"
+                class="com.github.arajhansa.gomockerygenerator.action.FileMocksAction"
+                description="This will generate mocks"
+                text="Generate Mocks for Current File">
+            <add-to-group group-id="GenerateGroup" anchor="last"/>
+        </action>
+        <action
+                id="com.github.arajhansa.gomockerygenerator.action.PackageMocksAction"
+                class="com.github.arajhansa.gomockerygenerator.action.PackageMocksAction"
+                description="This will generate mocks"
+                text="Generate Mocks for Current Package">
+            <add-to-group group-id="GenerateGroup" anchor="last"/>
+        </action>
+    </actions>
 
     <extensions defaultExtensionNs="com.intellij">
-        <applicationService serviceImplementation="com.github.arajhansa.gomockerygenerator.services.MyApplicationService"/>
-        <projectService serviceImplementation="com.github.arajhansa.gomockerygenerator.services.MyProjectService"/>
+        <applicationConfigurable
+                id="com.github.arajhansa.gomockerygenerator.configuration.Configurable"
+                instance="com.github.arajhansa.gomockerygenerator.configuration.Configurable"
+                displayName="Go Mockery Generator"
+                parentId="tools"/>
     </extensions>
 
-    <applicationListeners>
-        <listener class="com.github.arajhansa.gomockerygenerator.listeners.MyProjectManagerListener"
-                  topic="com.intellij.openapi.project.ProjectManagerListener"/>
-    </applicationListeners>
 </idea-plugin>
